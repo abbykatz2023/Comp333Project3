@@ -30,9 +30,9 @@ router = routers.DefaultRouter()
 # https://stackoverflow.com/questions/22083090/what-base-name-parameter-do-i-need-in-my-route-to-make-this-django-api-work
 # For more info see: https://www.django-rest-framework.org/api-guide/routers/
 router.register(r'user', views.UserView, 'user')
-router.register(r'artist', views.ArtistView, 'artist')
+#router.register(r'artist', views.ArtistView, 'artist')
 router.register(r'song', views.SongView, 'song')
-router.register(r'ratings', views.RatingsView, 'ratings')
+#router.register(r'ratings', views.RatingsView, 'ratings')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

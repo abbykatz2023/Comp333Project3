@@ -13,6 +13,18 @@ class User(models.Model):
     username = models.CharField(max_length=200, primary_key=True)
     password = models.CharField(max_length=200)
 
+
+class Song(models.Model):
+    def __str__(self):
+        return str(str(self.name) + " by " + str(self.artist) + "with rating" + str(self.rating))
+        # return self.song
+    name = models.CharField(max_length=200, primary_key=True)
+    artist = models.CharField(max_length= 200)
+    rating = models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
+    ratingNumber = models.PositiveIntegerField()
+
+'''
+
 class Artist(models.Model):
     def __str__(self):
         return self.artist
@@ -35,3 +47,5 @@ class Ratings(models.Model):
     username = models.ForeignKey(User,on_delete = models.CASCADE)  #models.CharField(max_length=200)
     song = models.ForeignKey(Song,on_delete = models.CASCADE)  #models.CharField(max_length=200)
     rating= models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
+
+'''
