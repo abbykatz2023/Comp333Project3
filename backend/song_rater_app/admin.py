@@ -9,5 +9,9 @@ from .models import User,Song
 
 #admin.site.register(Ratings)
 #admin.site.register(Artist)
+
+class SongAdmin(admin.ModelAdmin):
+    list_display = ('title','artist','rating')
+
 admin.site.register(User)
 admin.site.register(Song)
