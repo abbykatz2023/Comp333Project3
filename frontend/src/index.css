@@ -24,7 +24,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #282c34;
+  background-color: #8b9bbd;
 }
 button {
   margin: 5px;
@@ -38,7 +38,7 @@ button {
 }
 .tab-list > span {
   padding: 5px 8px;
-  border: 1px solid #282c34;
+  border: 1px solid #63779e;
   border-radius: 10px;
   margin: 5px;
   /* Spans do not have margins on top or bottom.
@@ -50,6 +50,6 @@ button {
 /* Change the style for the active tab-list span.
    Other than that, it inherits from the above. */
 .tab-list > span.active {
-  background-color: #282c34;
+  background-color: #8296be;
   color: #ffffff;
 }

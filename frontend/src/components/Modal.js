@@ -78,40 +78,42 @@ export default class CustomModal extends React.Component {
       // Open the modal on toggling/clicking. See the toggle function in App.js
       // below.
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> Todo Item </ModalHeader>
+        <ModalHeader toggle={toggle}> New Song </ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="title">Title</Label>
+              <Label for="name">Song Name</Label>
               <Input
                 type="text"
-                name="title"
-                value={this.state.activeItem.title}
+                name="name"
+                value={this.state.activeItem.name}
                 // "this" refers to the current event. If there is a change,
                 // it will be passed to the handleChange function above.
                 onChange={this.handleChange}
-                placeholder="Enter Todo Title"
+                placeholder="Enter Song Name"
               />
             </FormGroup>
             <FormGroup>
-              <Label for="description">Description</Label>
+              <Label for="artist">Artist</Label>
               <Input
                 type="text"
-                name="description"
-                value={this.state.activeItem.description}
+                name="artist"
+                value={this.state.activeItem.artist}
                 onChange={this.handleChange}
-                placeholder="Enter Todo description"
+                placeholder="Enter the Artist's name"
               />
             </FormGroup>
             <FormGroup check>
-              <Label for="completed">
+              <Label for="rating">
                 <Input
-                  type="checkbox"
-                  name="completed"
-                  checked={this.state.activeItem.completed}
+                  type="number"
+                  min = "1"
+                  max = "5"
+                  name="rating"
+                  checked={this.state.activeItem.rating}
                   onChange={this.handleChange}
                 />
-                Completed
+                Rating
               </Label>
             </FormGroup>
           </Form>

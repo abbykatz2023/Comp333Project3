@@ -15,13 +15,13 @@ class App extends React.Component {
     // activeItem (object)
     // todoList (array).
     this.state = {
-      viewCompleted: false,
       activeItem: {
-        title: "",
-        description: "",
-        completed: false,
+        name: "",
+        artist: "",
+        rating: 0,
+        ratingNumber:0
       },
-      todoList: [],
+      songList: [],
     };
   }
   // The `componentDidMount()` method is called after the component is rendered,
@@ -45,59 +45,60 @@ class App extends React.Component {
     // We are using async calls here. Please refer to the JavaScript
     // tutorial for how they work.
     axios
-      .get("http://localhost:8000/api/todos/")
+      .get("http://localhost:8000/api/song/")
       // To change a value in the `state` object for rendering, use `setState()`.
       // Here we get all todoList data. Each resolve (res) object has a data field.
-      .then((res) => this.setState({ todoList: res.data }))
+      .then((res) => this.setState({ songList: res.data }))
       .catch((err) => console.log(err));
   };
   // Another custom function.
   // The status parameter will receive a Boolean argument --- true or false ---
   // when the displayCompleted function is being called.
-  displayCompleted = (status) => {
-    if (status) {
+//   
+//   displayCompleted = (status) => {
+    // if (status) {
       // When a value in the state object changes, the component will re-render,
       // meaning that the output will change according to the new value(s).
-      return this.setState({ viewCompleted: true });
-    }
-    return this.setState({ viewCompleted: false });
-  };
+    //   return this.setState({ viewCompleted: true });
+    // }
+    // return this.setState({ viewCompleted: false });
+//   };
+  
   // Another custom function.
   // Function for switching between the Complete and Incomplete task views.
-  renderTabList = () => {
-    return (
-      <div className="tab-list">
-        {/* Complete view active */}
-        <span
-          onClick={() => this.displayCompleted(true)}
+//
+//   renderTabList = () => {
+    // return (
+    //   <div className="tab-list">
+        // {/* Complete view active */}
+        // <span
+        //   onClick={() => this.displayCompleted(true)}
           // A ternary within curly braces in JSX.
           // If the call to displayCompted returns viewCompleted as true,
           // set the left, i.e., Complete view, to active ...
-          className={this.state.viewCompleted ? "active" : ""}
-        >
-          Complete
-        </span>
-        {/* Incomplete view active. */}
-        <span
+        //   className={this.state.viewCompleted ? "active" : ""}
+        // >
+        //   Complete
+        // </span>
+        // {/* Incomplete view active. */}
+        // <span
           //  ... otherwise, set the Incomplete view to active.
-          onClick={() => this.displayCompleted(false)}
-          className={this.state.viewCompleted ? "" : "active"}
-        >
-          Incomplete
-        </span>
-      </div>
-    );
-  };
+        //   onClick={() => this.displayCompleted(false)}
+        //   className={this.state.viewCompleted ? "" : "active"}
+        // >
+        //   Incomplete
+        // </span>
+    //   </div>
+    // );
+//   };
   // Another custom function.
   // Function for managing the edit and delete views.
   renderItems = () => {
     // Destructuring assignment that assigns viewCompleted = this.state.viewCompleted
-    const { viewCompleted } = this.state;
+    // const { viewCompleted } = this.state;
     // filter is a callback function that returns the elements of an array
     // meeting a particular condition; here all items that are viewCompleted.
-    const newItems = this.state.todoList.filter(
-      (item) => item.completed === viewCompleted
-    );
+    const newItems = this.state.songList;
     // The items are then mapped to their UI elements based on their id, i.e.,
     // item.id, item.description, and item.title.
     return newItems.map((item) => (
@@ -105,10 +106,10 @@ class App extends React.Component {
         key={item.id}
         className="list-group-item d-flex justify-content-between align-items-center"
       >
-        <span
-          className={`todo-title mr-2 ${
-            this.state.viewCompleted ? "completed-todo" : ""
-          }`}
+        <span /////////////////
+          className={`todo-title mr-2 `}
+          //</li>this.state.viewCompleted ? "completed-todo" : ""
+        //}
           title={item.description}
         >
           {item.title}
@@ -154,28 +155,28 @@ class App extends React.Component {
         // Backticks are useful because they allow us to use dynamic variables,
         // i.e., the item.id in this case. You can use this technique also
         // for authentication tokens.
-        .put(`http://localhost:8000/api/todos/${item.id}/`, item)
+        .put(`http://localhost:8000/api/song/${item.id}/`, item)
         .then((res) => this.refreshList());
       return;
     }
     // If the item does not yet exist, use a POST request to write to the
     // database.
     axios
-      .post("http://localhost:8000/api/todos/", item)
+      .post("http://localhost:8000/api/song/", item)
       .then((res) => this.refreshList());
   };
   // Another custom function.
   // If the user triggers a delete event, send a delete request.
   handleDelete = (item) => {
     axios
-      .delete(`http://localhost:8000/api/todos/${item.id}`)
+      .delete(`http://localhost:8000/api/song/${item.id}`)
       .then((res) => this.refreshList());
   };
   // Another custom function.
   // If the user triggers a createItem event (by clicking on Add task), create
   // a new item with default values and set the modal to false.
   createItem = () => {
-    const item = { title: "", description: "", completed: false };
+    const item = { name:"", artist:"",rating:0,ratingNumer:0};//, description: "", completed: false };
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
   // Another custom function.
@@ -190,17 +191,17 @@ class App extends React.Component {
   render() {
     return (
       <main className="content">
-        <h1 className="text-white text-uppercase text-center my-4">Todo app</h1>
+        <h1 className="text-white text-uppercase text-center my-4">Song Rater</h1>
         <div className="row ">
           <div className="col-md-6 col-sm-10 mx-auto p-0">
             <div className="card p-3">
               <div className="">
                 {/* If the user clicks the Add task button, call the createItem function. */}
                 <button onClick={this.createItem} className="btn btn-primary">
-                  Add task
+                  Add Song
                 </button>
               </div>
-              {this.renderTabList()}
+              {/* {this.renderTabList()}  */}
               <ul className="list-group list-group-flush">
                 {this.renderItems()}
               </ul>
