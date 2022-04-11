@@ -33,6 +33,7 @@ router.register(r'user', views.UserView, 'user')
 #router.register(r'artist', views.ArtistView, 'artist')
 router.register(r'song', views.SongView, 'song')
 #router.register(r'ratings', views.RatingsView, 'ratings')
+router.register(r'rating', views.RatingView, 'rating')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

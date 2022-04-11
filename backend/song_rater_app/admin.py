@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User,Song
+from .models import User,Song, Rating  #Avg_Rating
 
 #class Song_RaterAdmin(admin.ModelAdmin):
 #    list_display = ('id','username','song','rating')
@@ -15,3 +15,5 @@ class SongAdmin(admin.ModelAdmin):
 
 admin.site.register(User)
 admin.site.register(Song)
+admin.site.register(Rating)
+#admin.site.register(Avg_Rating)

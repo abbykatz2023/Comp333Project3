@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets # We use a viewset.
-from .serializers import UserSerializer, SongSerializer# Import our serializer file.
-from .models import User,Song # Import our Todo model.
+from .serializers import UserSerializer, SongSerializer, RatingSerializer# Import our serializer file.
+from .models import User,Song,Rating #Avg_Rating # Import our Todo model.
 
 # Our Todo view.
 class UserView(viewsets.ModelViewSet):
@@ -13,6 +13,14 @@ class UserView(viewsets.ModelViewSet):
 class SongView(viewsets.ModelViewSet):
   serializer_class = SongSerializer
   queryset = Song.objects.all()
+
+class RatingView(viewsets.ModelViewSet):
+  serializer_class = RatingSerializer
+  queryset = Rating.objects.all()
+
+#class Avg_RatingView(viewsets.ModelViewSet):
+#  serializer_class = Avg_RatingSerializer
+#  queryset = Avg_Rating.objects.all()
 
 '''
 
