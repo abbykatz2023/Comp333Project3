@@ -29,7 +29,8 @@ class Song(models.Model):
     def __str__(self):
         return str(str(self.name) + " by " + str(self.artist))
         # return self.song
-    name = models.CharField(max_length=200, primary_key=True)
+    id = models.AutoField(primary_key= True)
+    name = models.CharField(max_length=200)
     artist = models.CharField(max_length= 200)
     #avg_ratings = Rating.objects.all().values('song').order_by('song').annotate(rating_average=Avg('rating'))
 

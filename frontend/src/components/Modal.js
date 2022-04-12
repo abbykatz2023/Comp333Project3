@@ -31,7 +31,7 @@ export default class CustomModal extends React.Component {
     // Here we define one property called activeItem.
     // 'this' refers to the currently instantiated CustomModal.
     this.state = {
-      activeItem: this.props.activeItem,
+      activeSong: this.props.activeSong,
     };
   }
 
@@ -55,12 +55,12 @@ export default class CustomModal extends React.Component {
     // {"id": 3, "title": "My Task", "description": "Wash Dishes", "completed": true}.
     // [name]: value sets the name of the task to the new value the user entered
     // (e.g., title to "Another Task" or description to "Sweep floor").
-    const activeItem = { ...this.state.activeItem, [name]: value };
+    const activeSong = { ...this.state.activeSong, [name]: value };
     // To change a value in the `state` object for rendering, use the `setState()`
     // method (on the current CustomModal instance referred to with `this`).
     // If you would not do so, the text shown to the user in the textbox, e.g.,
     // for the title of the new task would not change.
-    this.setState({ activeItem });
+    this.setState({ activeSong });
   };
   // The `render()` method is the only required method in a class component.
   // When called, it will render the page. You do not have to specifically
@@ -86,7 +86,7 @@ export default class CustomModal extends React.Component {
               <Input
                 type="text"
                 name="name"
-                value={this.state.activeItem.name}
+                value={this.state.activeSong.name}
                 // "this" refers to the current event. If there is a change,
                 // it will be passed to the handleChange function above.
                 onChange={this.handleChange}
@@ -98,28 +98,15 @@ export default class CustomModal extends React.Component {
               <Input
                 type="text"
                 name="artist"
-                value={this.state.activeItem.artist}
+                value={this.state.activeSong.artist}
                 onChange={this.handleChange}
                 placeholder="Enter the Artist's name"
               />
             </FormGroup>
-            <FormGroup check>
-              <Label for="rating">
-                <Input
-                  type="number"
-                  min = "1"
-                  max = "5"
-                  name="rating"
-                  checked={this.state.activeItem.rating}
-                  onChange={this.handleChange}
-                />
-                Rating
-              </Label>
-            </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => onSave(this.state.activeItem)}>
+          <Button color="success" onClick={() => onSave(this.state.activeSong)}>
             Save
           </Button>
         </ModalFooter>

@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 class SongSerializer(serializers.ModelSerializer):
   class Meta:
     model = Song
-    fields = ('name','artist') #MAYBE ADD 'id', AT THE BEGINNNING
+    fields = ('id','name','artist') #MAYBE ADD 'id', AT THE BEGINNNING
 
 class RatingSerializer(serializers.ModelSerializer):
   class Meta:
