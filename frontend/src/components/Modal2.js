@@ -16,7 +16,7 @@ export default class CustomModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeSong: this.props.activeSong,
+      activeRating: this.props.activeRating,
     };
   }
 
@@ -25,8 +25,9 @@ export default class CustomModal extends React.Component {
     if (event.target.type === "checkbox") {
       value = event.target.checked;
     }
-    const activeSong = { ...this.state.activeSong, [name]: value };
-    this.setState({ activeSong });
+    const activeRating = { ...this.state.activeRating, [name]: value };
+    //console.log(activeRating)
+    this.setState({ activeRating });
   };
   render() {
     // The modal has three properties: toggle, onSave, and activeItem.
@@ -39,25 +40,37 @@ export default class CustomModal extends React.Component {
       // Open the modal on toggling/clicking. See the toggle function in App.js
       // below.
       <Modal isOpen={true} toggle={toggle}>
-        <ModalHeader toggle={toggle}> New Song </ModalHeader>
+        <ModalHeader toggle={toggle}> New Rating </ModalHeader>
         <ModalBody>
           <Form>
             <FormGroup>
-              <Label for="name">Rating</Label>
+              <Label for="rating">Rating</Label>
               <Input
-                type="integer"
-                name="name"
-                value={this.state.activeSong.name}
+                type="number"
+                name="rating"
+                value={this.state.activeRating.rating}
                 // "this" refers to the current event. If there is a change,
                 // it will be passed to the handleChange function above.
                 onChange={this.handleChange}
                 placeholder="Enter Song Rating"
               />
             </FormGroup>
+            <FormGroup>
+              <Label for="user">Username</Label>
+              <Input
+                type="text"
+                name="user"
+                value={this.state.activeRating.user}
+                // "this" refers to the current event. If there is a change,
+                // it will be passed to the handleChange function above.
+                onChange={this.handleChange}
+                placeholder="Enter Username"
+              />
+            </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={() => onSave(this.state.activeSong)}>
+          <Button color="success" onClick={() => onSave(this.state.activeRating)}>
             Save
           </Button>
         </ModalFooter>

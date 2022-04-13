@@ -1,6 +1,7 @@
 import React from "react";
 // Import the CustomModal that we created in Modal.js.
 import Modal from "./components/Modal";
+import Modal2 from "./components/Modal2";
 import axios from "axios";
 
 class App extends React.Component {
@@ -92,6 +93,13 @@ class App extends React.Component {
           >
             Delete{" "}
           </button>
+          <button
+            // If the user clicks the Delete button, call the handleDelete function.
+            onClick={() => this.createRatingItem(item.id)}
+            className="btn btn-danger"
+          >
+            Add Rating{" "}
+          </button>
         </span>
       </li>
     ));
@@ -101,7 +109,14 @@ class App extends React.Component {
     // Upon toggle, set the modal to false, i.e., do not show the modal.
     this.setState({ modal: !this.state.modal });
   };
+
+  toggle2 = () => {
+    // We have a modal view below in the render() function.
+    // Upon toggle, set the modal to false, i.e., do not show the modal.
+    this.setState({ modal2: !this.state.modal2 });
+  };
   // Another custom function.
+
 
   handleSubmit = (item) => {
     this.toggle();
@@ -117,10 +132,14 @@ class App extends React.Component {
         .then((res) => this.refreshSongList());
       return;
     }
+    //else if (item.name && item.artist in this.state.songList) {
+    //  alert("This song already exists!")
+    //}
+    else{
     axios
       .post("http://localhost:8000/api/song/", item)
       .then((res) => this.refreshSongList());
-  };
+  }};
   handleDelete = (item) => {
     axios
       .delete(`http://localhost:8000/api/song/${item.id}`)
@@ -135,6 +154,44 @@ class App extends React.Component {
   editItem = (item) => {
     this.setState({ activeSong: item, modal: !this.state.modal });
   };
+
+
+  handleRatingSubmit = (rating) => {
+    this.toggle2();
+    // If the item already exists in our database, i.e., we have an id for our
+    // item, use a PUT request to modify it.
+    if (rating.song && rating.user) {
+      axios
+        // Note that we are using backticks here instead of double quotes.
+        // Backticks are useful because they allow us to use dynamic variables,
+        // i.e., the item.id in this case. You can use this technique also
+        // for authentication tokens.
+        .put(`http://localhost:8000/api/rating/${rating.song}/`, rating)
+        .then((res) => this.refreshRatingList());
+      return;
+    }
+    axios
+      .post("http://localhost:8000/api/rating/", rating)
+      .then((res) => this.refreshRatingList());
+  };
+
+
+  handleRatingDelete = (rating) => {
+    axios
+      .delete(`http://localhost:8000/api/rating/${rating.song}`)
+      .then((res) => this.refreshRatingList());
+  };
+  createRatingItem = (id) => {
+    const rating = { song:id, rating:0, user:""};//, description: "", completed: false };
+    console.log(id)
+    this.setState({ activeRating: rating, modal2: !this.state.modal2 });
+  };
+  // Another custom function.
+  // If the use triggers an editItem event.
+  editRatingItem = (rating) => {
+    this.setState({ activeRating: rating, modal2: !this.state.modal2 });
+  };
+
 
   // The `render()` method is the only required method in a class component.
   // When called, it will render the page. You do not have to specifically
@@ -166,6 +223,13 @@ class App extends React.Component {
             activeSong={this.state.activeSong}
             toggle={this.toggle}
             onSave={this.handleSubmit}
+          />
+        ) : null}
+        {this.state.modal2 ? (
+          <Modal2
+            activeRating={this.state.activeRating}
+            toggle={this.toggle2}
+            onSave={this.handleRatingSubmit}
           />
         ) : null}
       </main>

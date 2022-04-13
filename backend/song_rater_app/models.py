@@ -29,7 +29,7 @@ class Song(models.Model):
     def __str__(self):
         return str(str(self.name) + " by " + str(self.artist))
         # return self.song
-    id = models.AutoField(primary_key= True)
+    #id = models.AutoField(primary_key= True)
     name = models.CharField(max_length=200)
     artist = models.CharField(max_length= 200)
     # def number_of_songs(self): 
@@ -55,6 +55,7 @@ class Song(models.Model):
 class Rating(models.Model):
     def __str__(self):
         return str(self.song)+ " by user " +str(self.user) + "with rating" + str(self.rating)
+    #id = models.AutoField(primary_key= True)
     song=models.ForeignKey(Song, on_delete=models.CASCADE)
     rating= models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
     user = models.ForeignKey(User, on_delete=models.CASCADE)
