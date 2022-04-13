@@ -32,6 +32,22 @@ class Song(models.Model):
     id = models.AutoField(primary_key= True)
     name = models.CharField(max_length=200)
     artist = models.CharField(max_length= 200)
+    # def number_of_songs(self): 
+    #     rating_list = Rating.obects.filter(song = self)
+    #     return len(rating_list)
+    # def average_rating(self):
+    #     rating_list = Rating.objects.filter(song= self)
+    #     sum=0
+    #     for i in rating_list:
+    #         sum+= i.rating
+    #     if len(rating_list) > 0:
+    #         return sum / len(rating_list)
+    #     else:
+    #         return 0
+        
+
+    #rating= models.PositiveIntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     #avg_ratings = Rating.objects.all().values('song').order_by('song').annotate(rating_average=Avg('rating'))
 
     #rating_avg = Rating.objects.filter().aggregate(Avg('rating'))
