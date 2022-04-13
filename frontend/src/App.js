@@ -11,7 +11,12 @@ class App extends React.Component {
       activeSong: {
         name: "",
         artist: "",
-        rating: 0,
+        av_rating: 0,
+      },
+      activeRating: {
+        song:"",
+        rating:0,
+        user:""
       },
       songList: [],
       ratingList: [],
@@ -68,7 +73,7 @@ class App extends React.Component {
         //}
           title={item.id}
         >
-          {item.name} - {item.artist}
+          {item.name} - {item.artist} - {item.av_rating}
         </span>
         {/* UI for editing and deleting items and their respective events. */}
         <span>
@@ -122,7 +127,7 @@ class App extends React.Component {
       .then((res) => this.refreshSongList());
   };
   createItem = () => {
-    const item = { name:"", artist:"",rating:0};//, description: "", completed: false };
+    const item = { name:"", artist:"",av_rating:0};//, description: "", completed: false };
     this.setState({ activeSong: item, modal: !this.state.modal });
   };
   // Another custom function.
