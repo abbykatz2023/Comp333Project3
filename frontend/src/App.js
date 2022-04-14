@@ -17,10 +17,15 @@ class App extends React.Component {
       activeRating: {
         song:"",
         rating:0,
-        user:""
+        user:"",
+      },
+      activeUser:{
+        username:"",
+        password:"",
       },
       songList: [],
       ratingList: [],
+      userList: [],
     };
   }
   componentDidMount() {
@@ -53,6 +58,63 @@ class App extends React.Component {
     console.log('rating refresh')
     };
 
+    refreshUserList = () => {
+      axios
+      .get("http://localhost:8000/api/user/")
+      // To change a value in the `state` object for rendering, use `setState()`.
+      // Here we get all todoList data. Each resolve (res) object has a data field.
+      .then((res) => this.setState({ ratingList: res.data }))
+      .catch((err) => console.log(err));
+    console.log('rating refresh')
+    };
+
+
+  
+  checkSong = (item) => {
+    // check song in todolist, return boolean
+    for (var i = 0; i < this.state.songList.length; i++) {
+      if (this.state.songList[i].name == item.name && this.state.songList[i].artist == item.artist) {
+        // console.log('title same')
+        return true
+      }; 
+    };
+  };
+
+  checkRating = (rating) => {
+    //console.log(this.state.ratingList.length)
+    for (var i = 0; i < this.state.ratingList.length; i++){
+      if (this.state.ratingList[i].song == rating.song && this.state.ratingList[i].user == rating.user){
+        return true
+      };
+    };
+  };
+
+  originalRatingID = (rating) => {
+    //console.log(this.state.ratingList.length)
+    for (var i = 0; i < this.state.ratingList.length; i++){
+      if (this.state.ratingList[i].song == rating.song && this.state.ratingList[i].user == rating.user){
+        console.log(this.state.ratingList[i].id)
+        return this.state.ratingList[i].id
+      };
+    };
+  };
+
+  av_rating = (song) =>{
+    var num_of_ratings = 0
+    var total_rating = 0
+    for (var i = 0; i < this.state.ratingList.length; i++){
+      if (this.state.ratingList[i].song == song.id){
+        num_of_ratings = num_of_ratings + 1
+        total_rating = total_rating + this.state.ratingList[i].rating
+      };
+    };
+    //console.log(this.state.ratingList.length)
+    if (num_of_ratings == 0){
+      return 1
+    }
+    //console.log(total_rating)
+    return total_rating/num_of_ratings
+  };
 
 
   renderSongs = () => {
@@ -74,7 +136,7 @@ class App extends React.Component {
         //}
           title={item.id}
         >
-          {item.name} - {item.artist} - {item.av_rating}
+          {item.name} - {item.artist} - 3.0/5 {this.av_rating(item)}
         </span>
         {/* UI for editing and deleting items and their respective events. */}
         <span>
@@ -132,6 +194,10 @@ class App extends React.Component {
         .then((res) => this.refreshSongList());
       return;
     }
+    else if (this.checkSong(item) == true) {
+      alert('This song already exists');
+      // return;
+      } 
     //else if (item.name && item.artist in this.state.songList) {
     //  alert("This song already exists!")
     //}
@@ -160,13 +226,15 @@ class App extends React.Component {
     this.toggle2();
     // If the item already exists in our database, i.e., we have an id for our
     // item, use a PUT request to modify it.
-    if (rating.song && rating.user) {
+    //console.log(rating.song);
+    if (this.checkRating(rating)) {
+      var orig_id = this.originalRatingID(rating)
       axios
         // Note that we are using backticks here instead of double quotes.
         // Backticks are useful because they allow us to use dynamic variables,
         // i.e., the item.id in this case. You can use this technique also
         // for authentication tokens.
-        .put(`http://localhost:8000/api/rating/${rating.song}/`, rating)
+        .put(`http://localhost:8000/api/rating/${orig_id}/`, rating)
         .then((res) => this.refreshRatingList());
       return;
     }
